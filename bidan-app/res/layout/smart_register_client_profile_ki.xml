@@ -41,7 +41,7 @@
                 android:layout_height="@dimen/client_profile_badge_height"
                 android:layout_marginBottom="-5dp"
                 android:scaleType="fitStart"
-                android:src="@drawable/flag_hr"
+                android:src="@drawable/flag-yellow-rt"
                 android:visibility="gone"/>
 
             <ImageView
@@ -50,7 +50,7 @@
                 android:layout_height="@dimen/client_profile_badge_height"
                 android:layout_marginBottom="-5dp"
                 android:scaleType="fitStart"
-                android:src="@drawable/flag_hrl"
+                android:src="@drawable/flag-orange-rtp"
                 android:visibility="gone"/>
 
 
@@ -69,7 +69,7 @@
                 android:layout_height="@dimen/client_profile_badge_height"
                 android:layout_marginBottom="-5dp"
                 android:scaleType="fitStart"
-                android:src="@drawable/flag_hrp"
+                android:src="@drawable/flag-red-rtk"
                 android:visibility="gone"/>
 
             <ImageView

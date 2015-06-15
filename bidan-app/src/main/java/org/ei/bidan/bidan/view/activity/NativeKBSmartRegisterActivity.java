@@ -6,6 +6,7 @@ import org.ei.bidan.AllConstants;
 import org.ei.bidan.R;
 import org.ei.bidan.adapter.SmartRegisterPaginatedAdapter;
 import org.ei.bidan.bidan.provider.KBClientsProvider;
+import org.ei.bidan.bidan.view.contract.BidanVillageController;
 import org.ei.bidan.bidan.view.contract.KBClient;
 import org.ei.bidan.bidan.view.controller.KohortKBRegisterController;
 import org.ei.bidan.bidan.view.dialog.AllKBServiceMode;
@@ -25,6 +26,9 @@ import org.ei.bidan.view.dialog.OpenFormOption;
 import org.ei.bidan.view.dialog.ServiceModeOption;
 import org.ei.bidan.view.dialog.SortOption;
 
+import static com.google.common.collect.Iterables.concat;
+import static com.google.common.collect.Iterables.toArray;
+
 /**
  * Created by Dimas Ciputra on 2/18/15.
  */
@@ -33,6 +37,7 @@ public class NativeKBSmartRegisterActivity extends BidanSecuredNativeSmartRegist
     private SmartRegisterClientsProvider clientProvider = null;
     private KohortKBRegisterController controller;
     private DialogOptionMapper dialogOptionMapper;
+    private BidanVillageController villageController;
 
     private final ClientActionHandler clientActionHandler = new ClientActionHandler();
 
@@ -43,10 +48,10 @@ public class NativeKBSmartRegisterActivity extends BidanSecuredNativeSmartRegist
 
     private DialogOption[] getEditOptions() {
         return new DialogOption[]{
-            new OpenFormOption(getString(R.string.str_kb_edit),
-                    AllConstants.FormNames.KOHORT_KB_EDIT, formController),
             new OpenFormOption(getString(R.string.str_kb_update),
                     AllConstants.FormNames.KOHORT_KB_UPDATE, formController),
+            new OpenFormOption(getString(R.string.str_kb_edit),
+                    AllConstants.FormNames.KOHORT_KB_EDIT, formController),
             new OpenFormOption(getString(R.string.str_kb_close),
                         AllConstants.FormNames.KOHORT_KB_CLOSE, formController),
         };
@@ -90,7 +95,9 @@ public class NativeKBSmartRegisterActivity extends BidanSecuredNativeSmartRegist
 
             @Override
             public DialogOption[] filterOptions() {
-                return new DialogOption[]{new AllClientsFilter()};
+                Iterable<? extends DialogOption> villageFilterOptions =
+                        dialogOptionMapper.mapToVillageFilterOptions(villageController.getVillagesIndonesia());
+                return toArray(concat(DEFAULT_FILTER_OPTIONS, villageFilterOptions), DialogOption.class);
             }
 
             @Override
@@ -124,6 +131,7 @@ public class NativeKBSmartRegisterActivity extends BidanSecuredNativeSmartRegist
     protected void onInitialization() {
         controller = new KohortKBRegisterController(context.allKartuIbus(),
                 context.listCache(),context.kbClientsCache(),context.allKohort());
+        villageController = new BidanVillageController(context.villagesCache(), context.allKartuIbus());
         dialogOptionMapper = new DialogOptionMapper();
     }
 

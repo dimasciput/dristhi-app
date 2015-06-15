@@ -3,6 +3,7 @@ package org.ei.bidan.bidan.view.contract;
 import com.google.common.base.Strings;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ei.bidan.bidan.domain.Anak;
 import org.ei.bidan.domain.ANCServiceType;
 import org.ei.bidan.util.DateUtil;
 import org.ei.bidan.view.contract.AlertDTO;
@@ -14,6 +15,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.Years;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -50,11 +52,16 @@ public class KartuIbuPNCClient extends BidanSmartRegisterClient implements Kartu
     private String village;
     private String plan;
     private String komplikasi;
+    private String otherKomplikasi;
     private String metodeKontrasepsi;
     private String tdSistolik;
     private String tdDiastolik;
     private String tdSuhu;
+    private String tempatPersalinan;
+    private String tipePersalinan;
+    private String motherCondition;
 
+    private List<AnakClient> children;
     private List<AlertDTO> alerts;
     private List<ServiceProvidedDTO> services_provided;
     private String entityIdToSavePhoto;
@@ -161,9 +168,8 @@ public class KartuIbuPNCClient extends BidanSmartRegisterClient implements Kartu
 
     @Override
     public String village() {
-        return village;
+        return humanize(village);
     }
-
     @Override
     public String wifeName() {
         return humanize(name());
@@ -246,6 +252,22 @@ public class KartuIbuPNCClient extends BidanSmartRegisterClient implements Kartu
         return kiNumber;
     }
 
+    public void setTempatPersalinan(String tempatPersalinan) {
+        this.tempatPersalinan = tempatPersalinan;
+    }
+
+    public String tempatPersalinan() {
+        return Strings.isNullOrEmpty(tempatPersalinan) ? "-" :humanize(tempatPersalinan);
+    }
+
+    public void setTipePersalinan(String tipePersalinan) {
+        this.tipePersalinan = tipePersalinan;
+    }
+
+    public String tipePersalinan() {
+        return Strings.isNullOrEmpty(tipePersalinan) ? "-" : humanize(tipePersalinan);
+    }
+
     public String plan() { return humanize(plan); }
 
     public KartuIbuPNCClient withHusband(String husbandName) {
@@ -273,6 +295,11 @@ public class KartuIbuPNCClient extends BidanSmartRegisterClient implements Kartu
         return this;
     }
 
+    public KartuIbuPNCClient withOtherKomplikasi(String otherKomplikasi) {
+        this.otherKomplikasi = otherKomplikasi;
+        return this;
+    }
+
     public KartuIbuPNCClient withMetodeKontrasepsi(String metodeKontrasepsi) {
         this.metodeKontrasepsi = metodeKontrasepsi;
         return this;
@@ -286,24 +313,49 @@ public class KartuIbuPNCClient extends BidanSmartRegisterClient implements Kartu
     }
 
     public String tdDiastolik() {
-        return tdDiastolik == null ? "-" : tdDiastolik;
+        return Strings.isNullOrEmpty(tdDiastolik) ? "-" : tdDiastolik;
     }
 
     public String tdSistolik() {
-        return tdSistolik == null ? "-" : tdSistolik;
+        return Strings.isNullOrEmpty(tdSistolik) ? "-" : tdSistolik;
     }
 
     public String komplikasi() {
-        return humanize(komplikasi);
+        return Strings.isNullOrEmpty(komplikasi) ? "-" : humanize(komplikasi);
+    }
+
+    public String otherKomplikasi() {
+        return Strings.isNullOrEmpty(otherKomplikasi) ? "" : humanize(otherKomplikasi);
     }
 
     public String tdSuhu() {
-        return tdSuhu == null ? "-" : tdSuhu;
+        return Strings.isNullOrEmpty(tdSuhu) ? "-" : tdSuhu;
     }
 
     public String metodeKontrasepsi() {
         return humanize(metodeKontrasepsi);
     }
 
+    public KartuIbuPNCClient withChildren(List<AnakClient> children) {
+        this.children = children;
+        return this;
+    }
 
+    public List<AnakClient> children() {
+        return children;
+    }
+
+    public AnakClient getLastChild() { return children.get(children.size()-1); }
+
+    public String getLastBirth() {
+        if(children==null) return "";
+
+        return getLastChild().dateOfBirth();
+    }
+
+    public void setMotherCondition(String motherCondition) {
+        this.motherCondition = motherCondition;
+    }
+
+    public String motherCondition() {return humanize(this.motherCondition);}
 }

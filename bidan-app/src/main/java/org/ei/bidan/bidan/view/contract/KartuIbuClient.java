@@ -139,10 +139,15 @@ public class KartuIbuClient extends BidanSmartRegisterClient implements KISmartR
             dateNow = dateNow.withDayOfMonth(1);
 
             int months = Months.monthsBetween(dateNow, date).getMonths();
-            if(months > 1) {
+            if(months >= 1) {
                 _dueEdd = "" + months + " bulan lagi";
+            } else if(months == 0){
+                if(DateUtil.dayDifference(dateNow, date) > 0) {
+                    _dueEdd = "Bulan ini";
+                }
+                _dueEdd = "Sudah melahirkan";
             } else {
-                _dueEdd = "Bulan ini";
+                _dueEdd = "Sudah melahirkan";
             }
         }
 
@@ -151,6 +156,7 @@ public class KartuIbuClient extends BidanSmartRegisterClient implements KISmartR
 
     public LocalDateTime edd() {
         if(Strings.isNullOrEmpty(edd)) return null;
+        if(edd.equalsIgnoreCase("invalid date")) return null;
         return parse(edd);
     }
 
@@ -403,5 +409,13 @@ public class KartuIbuClient extends BidanSmartRegisterClient implements KISmartR
     @Override
     public String kbDate() {
         return Strings.isNullOrEmpty(kbStart) ? "-" : kbStart;
+    }
+
+    public void setHighRiskLabour(String highRiskLabour) {
+        setIsHighRiskLabour(!Strings.isNullOrEmpty(highRiskLabour) && highRiskLabour.equalsIgnoreCase("yes"));
+    }
+
+    public void setIsHighRiskPregnancy(String highRiskPregnancy) {
+        setIsHighRiskPregnancy(!Strings.isNullOrEmpty(highRiskPregnancy) && highRiskPregnancy.equalsIgnoreCase("yes"));
     }
 }

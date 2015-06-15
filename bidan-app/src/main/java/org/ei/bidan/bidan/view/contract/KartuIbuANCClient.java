@@ -5,6 +5,7 @@ import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.ei.bidan.domain.ANCServiceType;
 import org.ei.bidan.util.DateUtil;
+import org.ei.bidan.util.StringUtil;
 import org.ei.bidan.view.contract.AlertDTO;
 import org.ei.bidan.view.contract.ServiceProvidedDTO;
 import org.ei.bidan.view.contract.SmartRegisterClient;
@@ -65,6 +66,8 @@ public class KartuIbuANCClient extends BidanSmartRegisterClient implements Kartu
     private String penyakitKronis;
     private String alergi;
     private String tanggalHPHT;
+    private String riwayatKomplikasiKebidanan;
+    private String highRiskPregnancyReason;
 
     private List<AlertDTO> alerts;
     private List<ServiceProvidedDTO> services_provided;
@@ -94,7 +97,10 @@ public class KartuIbuANCClient extends BidanSmartRegisterClient implements Kartu
 
     @Override
     public LocalDateTime edd() {
-        return parse(edd);
+        if(Strings.isNullOrEmpty(edd)) return null;
+        if(edd.equalsIgnoreCase("invalid date")) return null;
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("YYYY-MM-dd");
+        return parse(edd, formatter);
     }
 
     @Override
@@ -179,7 +185,7 @@ public class KartuIbuANCClient extends BidanSmartRegisterClient implements Kartu
 
     @Override
     public String village() {
-        return getPuskesmas();
+        return humanize(village);
     }
 
     @Override
@@ -248,15 +254,6 @@ public class KartuIbuANCClient extends BidanSmartRegisterClient implements Kartu
     @Override
     public int compareName(SmartRegisterClient client) {
         return 0;
-    }
-
-    @Override
-    public boolean isHighRiskPregnancy() {
-        return this.isHighRiskPregnancy;
-    }
-
-    public void setIsHighRiskPregnancy(String highRiskPregnancy) {
-        this.isHighRiskPregnancy = !Strings.isNullOrEmpty(highRiskPregnancy) && highRiskPregnancy.equalsIgnoreCase("yes");
     }
 
     public String getPuskesmas() {
@@ -355,7 +352,7 @@ public class KartuIbuANCClient extends BidanSmartRegisterClient implements Kartu
     }
 
     public String getPenyakitKronis() {
-        return humanize(penyakitKronis);
+        return Strings.isNullOrEmpty(penyakitKronis) ? "" : humanize(penyakitKronis) + ",";
     }
 
     public void setPenyakitKronis(String penyakitKronis) {
@@ -364,7 +361,7 @@ public class KartuIbuANCClient extends BidanSmartRegisterClient implements Kartu
     }
 
     public String getAlergi() {
-        return alergi;
+        return StringUtil.humanize(alergi);
     }
 
     public void setAlergi(String alergi) {
@@ -389,5 +386,27 @@ public class KartuIbuANCClient extends BidanSmartRegisterClient implements Kartu
 
     public void setHighRiskLabour(String highRiskLabour) {
         setIsHighRiskLabour(!Strings.isNullOrEmpty(highRiskLabour) && highRiskLabour.equalsIgnoreCase("yes"));
+    }
+
+    public void setHigRiskPregnancyReason(String highRiskPregnancyReason) {
+        this.highRiskPregnancyReason = highRiskPregnancyReason;
+    }
+
+    public String getHighRiskPregnancyReason() {
+        return Strings.isNullOrEmpty(highRiskPregnancyReason) ? "" : humanize(highRiskPregnancyReason) + ",";
+    }
+
+
+    public void setIsHighRiskPregnancy(String highRiskPregnancy) {
+        setIsHighRiskPregnancy(!Strings.isNullOrEmpty(highRiskPregnancy) && highRiskPregnancy.equalsIgnoreCase("yes"));
+    }
+
+    public void setRiwayatKomplikasiKebidanan(String riwayatKomplikasiKebidanan) {
+        this.riwayatKomplikasiKebidanan = riwayatKomplikasiKebidanan;
+        setIsHighRiskFromANC(!Strings.isNullOrEmpty(this.riwayatKomplikasiKebidanan));
+    }
+
+    public String getRiwayatKomplikasiKebidanan() {
+        return Strings.isNullOrEmpty(riwayatKomplikasiKebidanan)? "" : humanize(this.riwayatKomplikasiKebidanan) + ",";
     }
 }

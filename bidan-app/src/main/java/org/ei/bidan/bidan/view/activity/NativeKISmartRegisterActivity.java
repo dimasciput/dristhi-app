@@ -6,8 +6,10 @@ import org.ei.bidan.R;
 import org.ei.bidan.adapter.SmartRegisterPaginatedAdapter;
 import org.ei.bidan.bidan.view.contract.BidanVillageController;
 import org.ei.bidan.bidan.view.contract.KartuIbuClient;
+import org.ei.bidan.bidan.view.dialog.AllHighRiskSort;
 import org.ei.bidan.bidan.view.dialog.AllKartuIbuServiceMode;
 import org.ei.bidan.bidan.view.controller.KartuIbuRegisterController;
+import org.ei.bidan.bidan.view.dialog.EstimatedDateOfDeliverySortKIANC;
 import org.ei.bidan.bidan.view.dialog.NoIbuSort;
 import org.ei.bidan.bidan.view.dialog.WifeAgeSort;
 import org.ei.bidan.bidan.provider.KIClientsProvider;
@@ -119,9 +121,8 @@ public class NativeKISmartRegisterActivity extends BidanSecuredNativeSmartRegist
             @Override
             public DialogOption[] sortingOptions() {
                 return new DialogOption[]{new NameSort(),
-                        new ReverseNameSort(), new WifeAgeSort(), new NoIbuSort(),
-                        new EstimatedDateOfDeliverySort(), new HighRiskSort(), new DusunSort(),
-                new KBMethodSort()};
+                        new ReverseNameSort(), new NoIbuSort(),
+                        new EstimatedDateOfDeliverySort(), new AllHighRiskSort()};
             }
 
             @Override

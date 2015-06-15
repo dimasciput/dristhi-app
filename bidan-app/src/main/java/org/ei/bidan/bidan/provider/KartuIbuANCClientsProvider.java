@@ -120,11 +120,14 @@ public class KartuIbuANCClientsProvider implements SmartRegisterClientsProvider 
     }
 
     private void setupResikoView(KartuIbuANCClient client, NativeKIANCRegisterViewHolder viewHolder) {
-        String penyakit = client.getPenyakitKronis();
+        String penyakit = client.getPenyakitKronis() + "" +
+                client.getRiwayatKomplikasiKebidanan() + "" + client.getHighRiskPregnancyReason() + "" +
+                (!client.getAlergi().equalsIgnoreCase("NA") ? "(Alergi : "+client.getAlergi()+" )" : "");
+
         String alergi = client.getAlergi();
 
         viewHolder.getPenyakitKronis().setText(Strings.isNullOrEmpty(penyakit) ? "-" : penyakit);
-        viewHolder.getAlergi().setText(Strings.isNullOrEmpty(alergi) ? "-" : alergi);
+        // viewHolder.getAlergi().setText(Strings.isNullOrEmpty(alergi) ? "-" : alergi);
 
         if(!Strings.isNullOrEmpty(penyakit) || !Strings.isNullOrEmpty(alergi)) {
             viewHolder.getLayoutResikoANC().setBackgroundColor(Color.parseColor("#FAD5D5"));

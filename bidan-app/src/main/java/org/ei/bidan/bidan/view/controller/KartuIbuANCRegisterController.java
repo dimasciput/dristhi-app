@@ -47,7 +47,7 @@ public class KartuIbuANCRegisterController extends CommonController{
                     KartuIbu ki = ancsWithKi.getRight();
 
                     KartuIbuANCClient kartuIbuClient = new KartuIbuANCClient(anc.getId(),
-                            ki.getDetail(VILLAGE),
+                            ki.dusun(),
                             ki.getDetail(PUSKESMAS_NAME),
                             ki.getDetail(MOTHER_NAME),
                             ki.getDetail(MOTHER_DOB))
@@ -70,6 +70,8 @@ public class KartuIbuANCRegisterController extends CommonController{
                     kartuIbuClient.setIsHighRiskANC(ki.getDetail(IS_HIGH_RISK));
                     kartuIbuClient.setIsHighRiskPregnancy(ki.getDetail(IS_HIGH_RISK_PREGNANCY));
                     kartuIbuClient.setHighRiskLabour(ki.getDetail(IS_HIGH_RISK_LABOUR));
+                    kartuIbuClient.setHigRiskPregnancyReason(ki.getDetail("highRiskPregnancyReason"));
+                    kartuIbuClient.setRiwayatKomplikasiKebidanan(anc.getDetail(COMPLICATION_HISTORY));
                     ancClients.add(kartuIbuClient);
                 }
                 sortByName(ancClients);

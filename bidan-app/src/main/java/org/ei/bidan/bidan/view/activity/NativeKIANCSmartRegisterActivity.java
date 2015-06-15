@@ -8,7 +8,9 @@ import org.ei.bidan.AllConstants;
 import org.ei.bidan.R;
 import org.ei.bidan.adapter.SmartRegisterPaginatedAdapter;
 import org.ei.bidan.bidan.provider.KartuIbuANCClientsProvider;
+import org.ei.bidan.bidan.view.contract.BidanVillageController;
 import org.ei.bidan.bidan.view.controller.KartuIbuANCRegisterController;
+import org.ei.bidan.bidan.view.dialog.AllHighRiskSort;
 import org.ei.bidan.bidan.view.dialog.EstimatedDateOfDeliverySortKIANC;
 import org.ei.bidan.bidan.view.dialog.KartuIbuANCOverviewServiceMode;
 import org.ei.bidan.domain.form.FieldOverrides;
@@ -17,6 +19,7 @@ import org.ei.bidan.util.StringUtil;
 import org.ei.bidan.view.contract.SmartRegisterClient;
 import org.ei.bidan.view.dialog.AllClientsFilter;
 import org.ei.bidan.view.dialog.DialogOption;
+import org.ei.bidan.view.dialog.DialogOptionMapper;
 import org.ei.bidan.view.dialog.DialogOptionModel;
 import org.ei.bidan.view.dialog.DusunSort;
 import org.ei.bidan.view.dialog.EditOption;
@@ -30,6 +33,8 @@ import org.ei.bidan.view.dialog.SortOption;
 import java.util.Collections;
 import java.util.List;
 
+import static com.google.common.collect.Iterables.concat;
+import static com.google.common.collect.Iterables.toArray;
 import static org.ei.bidan.AllConstants.FormNames.KARTU_IBU_ANC_CLOSE;
 import static org.ei.bidan.AllConstants.FormNames.KARTU_IBU_ANC_EDIT;
 import static org.ei.bidan.AllConstants.FormNames.KARTU_IBU_ANC_RENCANA_PERSALINAN;
@@ -44,6 +49,8 @@ public class NativeKIANCSmartRegisterActivity extends BidanSecuredNativeSmartReg
     private SmartRegisterClientsProvider clientProvider = null;
     private KartuIbuANCRegisterController controller;
     private final ClientActionHandler clientActionHandler = new ClientActionHandler();
+    private DialogOptionMapper dialogOptionMapper;
+    private BidanVillageController villageController;
 
     @Override
     protected SmartRegisterPaginatedAdapter adapter() {
@@ -90,10 +97,10 @@ public class NativeKIANCSmartRegisterActivity extends BidanSecuredNativeSmartReg
 
     private DialogOption[] getEditOptions() {
         return new DialogOption[]{
-                new OpenFormOption(getString(R.string.str_rencana_persalinan_anc_form),
-                        KARTU_IBU_ANC_RENCANA_PERSALINAN, formController),
                 new OpenFormOption(getString(R.string.str_register_anc_visit_form),
                         KARTU_IBU_ANC_VISIT, formController),
+                new OpenFormOption(getString(R.string.str_rencana_persalinan_anc_form),
+                        KARTU_IBU_ANC_RENCANA_PERSALINAN, formController),
                 new OpenFormOption(getString(R.string.str_register_pnc_form),
                         KARTU_IBU_PNC_REGISTRATION, formController),
                 new OpenFormOption(getString(R.string.anc_edit),
@@ -109,7 +116,9 @@ public class NativeKIANCSmartRegisterActivity extends BidanSecuredNativeSmartReg
 
             @Override
             public DialogOption[] filterOptions() {
-                return new DialogOption[]{new AllClientsFilter()};
+                Iterable<? extends DialogOption> villageFilterOptions =
+                        dialogOptionMapper.mapToVillageFilterOptions(villageController.getVillagesIndonesia());
+                return toArray(concat(DEFAULT_FILTER_OPTIONS, villageFilterOptions), DialogOption.class);
             }
 
             @Override
@@ -119,7 +128,7 @@ public class NativeKIANCSmartRegisterActivity extends BidanSecuredNativeSmartReg
 
             @Override
             public DialogOption[] sortingOptions() {
-                return new DialogOption[]{new NameSort(), new EstimatedDateOfDeliverySortKIANC(), new HighRiskSort()
+                return new DialogOption[]{new NameSort(), new EstimatedDateOfDeliverySortKIANC(), new AllHighRiskSort()
                 , new DusunSort()};
             }
 
@@ -142,6 +151,8 @@ public class NativeKIANCSmartRegisterActivity extends BidanSecuredNativeSmartReg
     protected void onInitialization() {
         controller = new KartuIbuANCRegisterController(context.allKohort(),
                 context.listCache(),context.kartuIbuANCClientsCache());
+        villageController = new BidanVillageController(context.villagesCache(), context.allKartuIbus());
+        dialogOptionMapper = new DialogOptionMapper();
     }
 
     @Override

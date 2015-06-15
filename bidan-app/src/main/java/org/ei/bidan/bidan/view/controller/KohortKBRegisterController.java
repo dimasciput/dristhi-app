@@ -57,7 +57,7 @@ public class KohortKBRegisterController extends CommonController{
                             kartuIbu.getCaseId(),
                             kartuIbu.getDetail(MOTHER_NAME),
                             kartuIbu.getDetail(HUSBAND_NAME),
-                            kartuIbu.getDetail(VILLAGE),
+                            kartuIbu.dusun(),
                             kartuIbu.getDetail(MOTHER_NUMBER))
                             .withKBMethod(kartuIbu.getDetail(CONTRACEPTION_METHOD))
                             .withIMS(kartuIbu.getDetails().get(IMS))

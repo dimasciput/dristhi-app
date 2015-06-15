@@ -9,11 +9,6 @@
                 "shouldLoadValue":true
             },
             {
-                "name":"motherId",
-                "shouldLoadValue":true,
-                "source":"ibu.kartu_ibu.id"
-            },
-            {
                 "name":"referenceDate",
                 "bind":"/model/instance/PNC_Visit/tanggal_kunjungan"
             },

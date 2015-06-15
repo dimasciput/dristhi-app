@@ -71,7 +71,7 @@ public class AnakClient extends BidanSmartRegisterClient{
     public String gender() { return StringUtil.humanize(gender); }
 
     public String weight() {
-        return weight;
+        return Strings.isNullOrEmpty(weight) ? "-" : weight ;
     }
 
     public String motherKiNumber() {

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 
+import com.google.common.base.Strings;
+
 import org.ei.bidan.R;
 import org.ei.bidan.bidan.view.contract.KartuIbuANCClient;
 import org.ei.bidan.bidan.view.contract.KartuIbuPNCClient;
@@ -90,11 +92,13 @@ public class KartuIbuPNCClientsProvider implements SmartRegisterClientsProvider 
     }
 
     private void setupMetodeKontrasepsiView(KartuIbuPNCClient client, NativeKIPNCRegisterViewHolder viewHolder) {
-        viewHolder.getMetodeKontrasepsi().setText(client.metodeKontrasepsi());
+        viewHolder.kondisiIbu().setText(client.motherCondition());
+        viewHolder.kondisiAnak1().setText(client.getLastChild().getBirthCondition());
+        viewHolder.kondisiAnak2().setText(client.getLastChild().gender() + " , " + client.getLastChild().weight());
     }
 
     private void setupKomplikasiView(KartuIbuPNCClient client, NativeKIPNCRegisterViewHolder viewHolder) {
-        viewHolder.getKomplikasi().setText(client.komplikasi());
+        viewHolder.getKomplikasi().setText(client.komplikasi() + " " + client.otherKomplikasi());
     }
 
 
@@ -127,7 +131,9 @@ public class KartuIbuPNCClientsProvider implements SmartRegisterClientsProvider 
     }
 
     private void setupPNCPlan(KartuIbuPNCClient client, NativeKIPNCRegisterViewHolder viewHolder) {
-        viewHolder.plan().setText(client.plan()==null?"-":client.plan());
+        viewHolder.dokTempat().setText(client.tempatPersalinan());
+        viewHolder.dokTipe().setText(client.tipePersalinan());
+        viewHolder.dokTanggalBersalin().setText(client.getLastBirth());
     }
 
     @Override

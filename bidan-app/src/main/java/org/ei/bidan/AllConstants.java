@@ -386,7 +386,7 @@ public class AllConstants {
 
     public class KartuANCFields {
         public static final String MOTHER_NUTRITION_STATUS = "StatusGiziibu";
-        public static final String COMPLICATION_HISTORY = "RiwayatKomplikasiKebidanan";
+        public static final String COMPLICATION_HISTORY = "riwayatKomplikasiKebidanan";
         public static final String TRIMESTER = "TrimesterKe";
         public static final String IMMUNIZATION_TT_STATUS = "StatusImunisasiTT";
         public static final String CLINICAL_AGE = "UsiaKlinis";
@@ -400,10 +400,12 @@ public class AllConstants {
 
     public class KartuPNCFields {
         public static final String PLANNING = "Rencana";
-        public static final String COMPLICATION = "Komplikasi";
+        public static final String COMPLICATION = "komplikasi";
+        public static final String OTHER_COMPLICATION = "komplikasi_lainnya";
         public static final String VITAL_SIGNS_TD_DIASTOLIC = "tandaVitalTDSistolik";
         public static final String VITAL_SIGNS_TD_SISTOLIC = "tandaVitalTDDiastolik";
         public static final String VITAL_SIGNS_TEMP = "tandaVitalSuhu";
+        public static final String MOTHER_CONDITION = "keadaanIbu";
     }
 
     public class KartuAnakFields {

@@ -31,19 +31,64 @@
         android:layout_height="fill_parent"
         android:src="@color/smart_register_client_divider_color"/>
 
-
-    <TextView
-        android:id="@+id/pnc_plan"
-        android:layout_width="@dimen/list_ec_no_view_width"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="10dp"
+    <RelativeLayout
+        android:id="@+id/dokumentasi_persalinan"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="125"
-        android:scrollHorizontally="false"
-        android:ellipsize="none"
-        android:singleLine="false"
-        android:maxLines="3"
-        android:paddingLeft="10dp"
-        style="@style/CustomFontTextViewStyle.ListView.Medium"/>
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <org.ei.bidan.view.customControls.CustomFontTextView
+            android:id="@+id/dok_tanggal_bersalin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="16/05/2015"
+            style="@style/CustomFontTextViewStyle.ListView.Small"/>
+
+        <org.ei.bidan.view.customControls.CustomFontTextView
+            android:id="@+id/dok_tempat_persalinan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/dok_tanggal_bersalin"
+            android:text="Tempat : "
+            style="@style/CustomFontTextViewStyle.ListView.Small"/>
+
+
+        <org.ei.bidan.view.customControls.CustomFontTextView
+            android:id="@+id/txt_tempat_persalinan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/dok_tempat_persalinan"
+            android:scrollHorizontally="false"
+            android:ellipsize="none"
+            android:singleLine="false"
+            android:maxLines="2"
+            style="@style/CustomFontTextViewStyle.ListView.Small"/>
+
+        <org.ei.bidan.view.customControls.CustomFontTextView
+            android:id="@+id/dok_tipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_tempat_persalinan"
+            android:layout_alignParentLeft="true"
+            android:text="Tipe : "
+            style="@style/CustomFontTextViewStyle.ListView.Small"/>
+
+        <org.ei.bidan.view.customControls.CustomFontTextView
+            android:id="@+id/txt_tipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/dok_tipe"
+            android:layout_below="@id/txt_tempat_persalinan"
+            style="@style/CustomFontTextViewStyle.ListView.Small.NoPadding"/>
+
+    </RelativeLayout>
 
 
     <ImageView
@@ -61,9 +106,9 @@
         android:scrollHorizontally="false"
         android:ellipsize="none"
         android:singleLine="false"
-        android:maxLines="3"
+        android:maxLines="4"
         android:paddingLeft="10dp"
-        style="@style/CustomFontTextViewStyle.ListView.Medium"/>
+        style="@style/CustomFontTextViewStyle.ListView.Medium.FourLine"/>
 
 
     <ImageView
@@ -72,18 +117,63 @@
         android:src="@color/smart_register_client_divider_color"/>
 
 
-    <TextView
-        android:id="@+id/txt_metode_kontrasepsi"
-        android:layout_width="@dimen/list_ec_no_view_width"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="10dp"
-        android:layout_weight="120"
-        android:scrollHorizontally="false"
-        android:ellipsize="none"
-        android:singleLine="false"
-        android:maxLines="3"
-        android:paddingLeft="10dp"
-        style="@style/CustomFontTextViewStyle.ListView.Medium"/>
+    <RelativeLayout
+        android:id="@+id/kondisi_persalinan"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="125"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:background="@color/status_bar_text_almost_white">
+
+        <org.ei.bidan.view.customControls.CustomFontTextView
+            android:id="@+id/kondisi_ibu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Ibu : "
+            style="@style/CustomFontTextViewStyle.ListView.Small"/>
+
+        <org.ei.bidan.view.customControls.CustomFontTextView
+            android:id="@+id/txt_kondisi_ibu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/kondisi_ibu"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentTop="true"
+            android:text="Sehat"
+            style="@style/CustomFontTextViewStyle.ListView.Small.NoPadding"/>
+
+
+        <org.ei.bidan.view.customControls.CustomFontTextView
+            android:id="@+id/kondisi_anak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/kondisi_ibu"
+            android:text="Anak : "
+            style="@style/CustomFontTextViewStyle.ListView.Small"/>
+
+        <org.ei.bidan.view.customControls.CustomFontTextView
+            android:id="@+id/txt_kondisi_anak_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/kondisi_ibu"
+            android:layout_toRightOf="@+id/kondisi_anak"
+            android:text="Sehat"
+            style="@style/CustomFontTextViewStyle.ListView.Small.NoPadding"/>
+
+        <org.ei.bidan.view.customControls.CustomFontTextView
+            android:id="@+id/txt_kondisi_anak_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/kondisi_anak"
+            style="@style/CustomFontTextViewStyle.ListView.Small"/>
+
+    </RelativeLayout>
+
 
 
     <ImageView

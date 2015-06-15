@@ -9,6 +9,7 @@ import org.ei.bidan.R;
 import org.ei.bidan.adapter.SmartRegisterPaginatedAdapter;
 import org.ei.bidan.bidan.provider.KartuIbuANCClientsProvider;
 import org.ei.bidan.bidan.provider.KartuIbuPNCClientsProvider;
+import org.ei.bidan.bidan.view.contract.BidanVillageController;
 import org.ei.bidan.bidan.view.controller.KartuIbuANCRegisterController;
 import org.ei.bidan.bidan.view.controller.KartuIbuPNCRegisterController;
 import org.ei.bidan.bidan.view.dialog.KartuIbuANCOverviewServiceMode;
@@ -20,6 +21,7 @@ import org.ei.bidan.util.StringUtil;
 import org.ei.bidan.view.contract.SmartRegisterClient;
 import org.ei.bidan.view.dialog.AllClientsFilter;
 import org.ei.bidan.view.dialog.DialogOption;
+import org.ei.bidan.view.dialog.DialogOptionMapper;
 import org.ei.bidan.view.dialog.DialogOptionModel;
 import org.ei.bidan.view.dialog.DusunSort;
 import org.ei.bidan.view.dialog.EditOption;
@@ -32,6 +34,8 @@ import org.ei.bidan.view.dialog.SortOption;
 import java.util.Collections;
 import java.util.List;
 
+import static com.google.common.collect.Iterables.concat;
+import static com.google.common.collect.Iterables.toArray;
 import static org.ei.bidan.AllConstants.FormNames.KARTU_IBU_ANC_REGISTRATION;
 import static org.ei.bidan.AllConstants.FormNames.KARTU_IBU_PNC_CLOSE;
 import static org.ei.bidan.AllConstants.FormNames.KARTU_IBU_PNC_EDIT;
@@ -47,6 +51,8 @@ public class NativeKIPNCSmartRegisterActivity extends BidanSecuredNativeSmartReg
     private SmartRegisterClientsProvider clientProvider = null;
     private KartuIbuPNCRegisterController controller;
     private final ClientActionHandler clientActionHandler = new ClientActionHandler();
+    private DialogOptionMapper dialogOptionMapper;
+    private BidanVillageController villageController;
 
     @Override
     protected SmartRegisterPaginatedAdapter adapter() {
@@ -84,7 +90,9 @@ public class NativeKIPNCSmartRegisterActivity extends BidanSecuredNativeSmartReg
 
             @Override
             public DialogOption[] filterOptions() {
-                return new DialogOption[]{new AllClientsFilter()};
+                Iterable<? extends DialogOption> villageFilterOptions =
+                        dialogOptionMapper.mapToVillageFilterOptions(villageController.getVillagesIndonesia());
+                return toArray(concat(DEFAULT_FILTER_OPTIONS, villageFilterOptions), DialogOption.class);
             }
 
             @Override
@@ -116,6 +124,8 @@ public class NativeKIPNCSmartRegisterActivity extends BidanSecuredNativeSmartReg
     protected void onInitialization() {
         controller = new KartuIbuPNCRegisterController(context.allKohort(),
                 context.listCache(),context.kartuIbuPNCClientsCache());
+        villageController = new BidanVillageController(context.villagesCache(), context.allKartuIbus());
+        dialogOptionMapper = new DialogOptionMapper();
     }
 
     @Override

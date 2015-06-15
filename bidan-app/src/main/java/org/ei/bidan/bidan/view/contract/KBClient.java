@@ -241,7 +241,7 @@ public class KBClient extends BidanSmartRegisterClient implements KISmartRegiste
 
     @Override
     public String village() {
-        return village;
+        return humanize(village);
     }
 
     @Override

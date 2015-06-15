@@ -1,5 +1,8 @@
 package org.ei.bidan.bidan.view.controller;
 
+import android.util.Log;
+
+import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 
 import org.ei.bidan.AllConstants;
@@ -72,6 +75,8 @@ public class KartuIbuRegisterController  extends CommonController{
                     kartuIbuClient.setIsHighPriority(kartuIbu.getDetail(IS_HIGH_PRIORITY));
                     kartuIbuClient.setIsHighRisk(kartuIbu.getDetail(IS_HIGH_RISK));
                     kartuIbuClient.setEdd(kartuIbu.getDetail(EDD));
+                    kartuIbuClient.setIsHighRiskPregnancy(kartuIbu.getDetail(IS_HIGH_RISK_PREGNANCY));
+                    kartuIbuClient.setHighRiskLabour(kartuIbu.getDetail(IS_HIGH_RISK_LABOUR));
                     updateStatusInformation(kartuIbu, kartuIbuClient);
                     updateChildrenInformation(kartuIbuClient);
                     kartuIbuClients.add(kartuIbuClient);
@@ -112,6 +117,10 @@ public class KartuIbuRegisterController  extends CommonController{
     //#TODO: Needs refactoring
     private void updateStatusInformation(KartuIbu kartuIbu, KartuIbuClient kartuIbuClient) {
         Ibu ibu = allKohort.findIbuWithOpenStatusByKIId(kartuIbu.getCaseId());
+
+        if(ibu!=null) {
+            kartuIbuClient.setIsHighRiskFromANC(!Strings.isNullOrEmpty(ibu.getDetail(CHRONIC_DISEASE)));
+        }
 
         if( ibu == null && kartuIbu.hasKBMethod()) {
             kartuIbuClient.withStatus(EasyMap.create(STATUS_TYPE_FIELD, KELUARGA_BERENCANA)

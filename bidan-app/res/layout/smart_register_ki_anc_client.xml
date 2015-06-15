@@ -58,7 +58,7 @@
                 style="@style/CustomFontTextViewStyle.ListView.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="HTPT :"/>
+                android:text="HPHT :"/>
 
             <org.ei.bidan.view.customControls.CustomFontTextView
                 android:id="@+id/txt_htpt"
@@ -143,37 +143,37 @@
             android:background="@color/status_bar_text_almost_white"
             android:orientation="vertical">
 
-            <org.ei.bidan.view.customControls.CustomFontTextView
-                android:id="@+id/lbl_ki_anc_penyakit_kronis"
-                style="@style/CustomFontTextViewStyle.ListView.VerySmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Penyakit Kronis :"/>
+            <!--<org.ei.bidan.view.customControls.CustomFontTextView-->
+                <!--android:id="@+id/lbl_ki_anc_penyakit_kronis"-->
+                <!--style="@style/CustomFontTextViewStyle.ListView.VerySmall"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Penyakit Kronis :"/>-->
 
 
             <org.ei.bidan.view.customControls.CustomFontTextView
                 android:id="@+id/txt_ki_anc_penyakit_kronis"
                 android:layout_marginTop="-2dp"
-                style="@style/CustomFontTextViewStyle.ListView.Small"
+                style="@style/CustomFontTextViewStyle.ListView.Medium.FourLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Something something asdasd"/>
 
-            <org.ei.bidan.view.customControls.CustomFontTextView
-                android:id="@+id/lbl_ki_anc_alergi"
-                style="@style/CustomFontTextViewStyle.ListView.VerySmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Alergi :"/>
+            <!--<org.ei.bidan.view.customControls.CustomFontTextView-->
+                <!--android:id="@+id/lbl_ki_anc_alergi"-->
+                <!--style="@style/CustomFontTextViewStyle.ListView.VerySmall"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Alergi :"/>-->
 
 
-            <org.ei.bidan.view.customControls.CustomFontTextView
-                android:id="@+id/txt_ki_anc_alergi"
-                android:layout_marginTop="-2dp"
-                style="@style/CustomFontTextViewStyle.ListView.Small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="alergi apa aja"/>
+            <!--<org.ei.bidan.view.customControls.CustomFontTextView-->
+                <!--android:id="@+id/txt_ki_anc_alergi"-->
+                <!--android:layout_marginTop="-2dp"-->
+                <!--style="@style/CustomFontTextViewStyle.ListView.Small"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="alergi apa aja"/>-->
         </LinearLayout>
 
     </LinearLayout>
